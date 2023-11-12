@@ -2,45 +2,63 @@
 
 namespace app\modules\admin\controllers;
 
-use app\models\Schedule;
-use app\modules\admin\ScheduleSearch;
+use app\models\Comment;
+use app\modules\admin\CommentSearch;
+use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ScheduleController implements the CRUD actions for Schedule model.
+ * CommentController implements the CRUD actions for Comment model.
  */
-class ScheduleController extends Controller
+class CommentController extends Controller
 {
     /**
      * @inheritDoc
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'create', 'admin'],
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['create', 'admin', 'good', 'verybad'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->isAdmin();
+                        }
                     ],
                 ],
-            ]
-        );
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
     }
 
     public $layout='admin';
 
     /**
-     * Lists all Schedule models.
+     * Lists all Comment models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ScheduleSearch();
+        $searchModel = new CommentSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -50,7 +68,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Displays a single Schedule model.
+     * Displays a single Comment model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -63,13 +81,13 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Creates a new Schedule model.
+     * Creates a new Comment model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Schedule();
+        $model = new Comment();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -85,7 +103,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Updates an existing Schedule model.
+     * Updates an existing Comment model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -105,7 +123,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Deletes an existing Schedule model.
+     * Deletes an existing Comment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -119,18 +137,30 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Finds the Schedule model based on its primary key value.
+     * Finds the Comment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Schedule the loaded model
+     * @return Comment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Schedule::findOne(['id' => $id])) !== null) {
+        if (($model = Comment::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actionGood($id)
+    {
+        $this->findModel($id)->good();
+        return $this->redirect(['index']);
+    }
+
+    public function actionVerybad($id)
+    {
+        $this->findModel($id)->verybad();
+        return $this->redirect(['index']);
     }
 }

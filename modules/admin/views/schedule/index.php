@@ -10,15 +10,22 @@ use yii\grid\GridView;
 /** @var app\modules\admin\ScheduleSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Schedules');
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app', 'Расписание кружков');
+
 ?>
+<a href="<?php echo Url::toRoute(['default/index'])?>" class="btn btn-light">Назад</a>
+<style>
+    .btn{
+        background: #40176C;
+        color: white;
+    }
+</style>
 <div class="schedule-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Schedule'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Добавить расписание'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -31,9 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'section_id',
-            'teacher',
-            'day',
-            'time',
+            'teacher_id',
+            'day_id',
+            'time_id',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Schedule $model, $key, $index, $column) {

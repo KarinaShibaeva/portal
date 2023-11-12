@@ -70,11 +70,11 @@ class Comment extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'body' => Yii::t('app', 'Оставьте свой отзыв'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'status' => Yii::t('app', 'Status'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'section_id' => Yii::t('app', 'Section ID'),
+            'created_at' => Yii::t('app', 'Дата создания'),
+            'updated_at' => Yii::t('app', 'Дата изменения'),
+            'status' => Yii::t('app', 'Статус'),
+            'user_id' => Yii::t('app', 'Пользователь'),
+            'section_id' => Yii::t('app', 'Кружок'),
         ];
     }
 
@@ -114,6 +114,19 @@ class Comment extends \yii\db\ActiveRecord
         switch ($this->status){
             case 0:return'Ожидание';
             case 1:return'Принято';
+            case 2:return'Отклонено';
         }
+    }
+
+    public function good()
+    {
+        $this->status = 1;
+        return $this->save(false);
+    }
+
+    public function verybad()
+    {
+        $this->status = 2;
+        return $this->save(false);
     }
 }

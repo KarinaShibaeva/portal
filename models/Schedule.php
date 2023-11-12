@@ -51,10 +51,10 @@ class Schedule extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'section_id' => Yii::t('app', 'Section ID'),
-            'teacher_id' => Yii::t('app', 'Teacher ID'),
-            'day_id' => Yii::t('app', 'Day ID'),
-            'time_id' => Yii::t('app', 'Time ID'),
+            'section_id' => Yii::t('app', 'Кружок'),
+            'teacher_id' => Yii::t('app', 'Учитель'),
+            'day_id' => Yii::t('app', 'День недели'),
+            'time_id' => Yii::t('app', 'Время'),
         ];
     }
 

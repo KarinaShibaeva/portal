@@ -4,12 +4,12 @@ namespace app\modules\admin;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Schedule;
+use app\models\Comment;
 
 /**
- * ScheduleSearch represents the model behind the search form of `app\models\Schedule`.
+ * CommentSearch represents the model behind the search form of `app\models\Comment`.
  */
-class ScheduleSearch extends Schedule
+class CommentSearch extends Comment
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,8 @@ class ScheduleSearch extends Schedule
     public function rules()
     {
         return [
-            [['id', 'section_id', 'teacher_id', 'day_id', 'time_id'], 'integer'],
+            [['id', 'status', 'user_id', 'section_id'], 'integer'],
+            [['body', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -39,7 +40,7 @@ class ScheduleSearch extends Schedule
      */
     public function search($params)
     {
-        $query = Schedule::find();
+        $query = Comment::find();
 
         // add conditions that should always apply here
 
@@ -58,11 +59,14 @@ class ScheduleSearch extends Schedule
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'status' => $this->status,
+            'user_id' => $this->user_id,
             'section_id' => $this->section_id,
-            'teacher_id' => $this->teacher_id,
-            'day_id' => $this->day_id,
-            'time_id' => $this->time_id,
         ]);
+
+        $query->andFilterWhere(['like', 'body', $this->body]);
 
         return $dataProvider;
     }

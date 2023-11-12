@@ -1,16 +1,16 @@
 <?php
 
-use app\models\Records;
+use app\models\Comment;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var app\modules\admin\RecordsSearch $searchModel */
+/** @var app\modules\admin\CommentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Заявки');
+$this->title = Yii::t('app', 'Отзывы');
 
 ?>
 <a href="<?php echo Url::toRoute(['default/index'])?>" class="btn btn-light">Назад</a>
@@ -20,7 +20,7 @@ $this->title = Yii::t('app', 'Заявки');
         color: white;
     }
 </style>
-<div class="records-index">
+<div class="comment-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -34,13 +34,9 @@ $this->title = Yii::t('app', 'Заявки');
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            //'surname',
-            //'name',
-            //'patronymic',
-            //'phone',
-            'child_surname',
-            'child_name',
-            'child_patronymic',
+            'body:ntext',
+            'created_at',
+            'updated_at',
             [
                 'attribute' => 'status',
                 'value' => function($data){
@@ -63,8 +59,8 @@ $this->title = Yii::t('app', 'Заявки');
                 }
             ],
             //'user_id',
-            'category_id',
-            'section_id',
+            //'section_id',
+
         ],
     ]); ?>
 

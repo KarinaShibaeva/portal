@@ -140,19 +140,21 @@ class SiteController extends Controller
 
             //$teachers = Teacher::find()->all();
 
-            $comments = Comment::find()->all();
+            $status = Comment::find()->where(['status'=>1])->all();
 
             $model = new Comment();
+            $comments = Comment::find()->all();
             if ($model->load(Yii::$app->request->post())) {
-                Yii::$app->session->setFlash('success', 'Ваш комментарий отправлен');
+                Yii::$app->session->setFlash('success', 'Комментарий у модератора');
                 $model->save();
                 return $this->refresh();
             }
 
+
             return $this->render('contact', [
                 'categories'=>$categories,
                 'sections'=>$sections,
-                //'teachers'=>$teachers,
+                'status'=>$status,
                 'model' => $model,
                 'comments' => $comments,
             ]);
@@ -235,9 +237,17 @@ class SiteController extends Controller
 
     public function actionKabinet()
     {
-        $user = User::findOne(Yii::$app->user->id);
-        $records = $user->record;
-        return $this->render('kabinet', ['records'=>$records]);
+        $records = Records::find()->where(['user_id' => Yii::$app->user->id])->all();
+
+        if(count($records) === 0) {
+            // Сохраняем сообщение во флэш-памяти
+            Yii::$app->session->setFlash('noRequests', 'Добро пожаловать в личный кабинет! Ваши заявки будут отображаться здесь, как только вы их отправите.');
+        }
+
+        return $this->render('kabinet', [
+            'records' => $records,
+        ]);
+
     }
 
     public function actionSchedule()

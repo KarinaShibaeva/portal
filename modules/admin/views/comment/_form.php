@@ -4,21 +4,17 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\Schedule $model */
+/** @var app\models\Comment $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="schedule-form">
+<div class="comment-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'section_id')->textInput() ?>
+    <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'teacher_id')->textInput() ?>
-
-    <?= $form->field($model, 'day_id')->textInput() ?>
-
-    <?= $form->field($model, 'time_id')->textInput() ?>
+    <?= $form->field($model, 'user_id')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

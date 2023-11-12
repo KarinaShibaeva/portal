@@ -19,7 +19,7 @@ use yii\helpers\Url;
 <div class="d-flex justify-content-evenly">
 <?php foreach ($sections as $section):?>
     <div class="card mt-3" style="width: 25rem;">
-        <img src="../images/<?php echo $section->image?>" class="card-img-top" alt="...">
+        <img src="../images/<?php echo $section['image']?>" class="card-img-top" alt="...">
         <div class="card-body">
             <h4 class="card-title"><?php echo $section['name']?></h4>
             <p><?php echo $section['description']?></p>

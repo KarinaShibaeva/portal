@@ -81,7 +81,7 @@ $this->title = '';
                 <p class="card-text"><?php echo $section['description'];?></p>
                 <a href="<?php echo Url::toRoute(['site/record']) ?>" class="btn btn-light">Записаться на кружок</a>
                 <h5 class="mt-3">Отзывы</h5>
-                <?php foreach ($comments as $comment):?>
+                <?php foreach ($status as $comment):?>
                     <div id="content">
                         <div class="testimonial">
                             <blockquote>
@@ -94,6 +94,7 @@ $this->title = '';
                         </div>
                     </div>
                 <?php endforeach;?>
+                <?if (!Yii::$app->user->isGuest):?>
                 <?php $form = ActiveForm::begin([
                     'id' => 'login-form',
                     'fieldConfig' => [
@@ -116,5 +117,6 @@ $this->title = '';
                 <?php ActiveForm::end(); ?>
             </div>
         </div>
+        <?php endif;?>
     <?php endforeach;?>
 </div>

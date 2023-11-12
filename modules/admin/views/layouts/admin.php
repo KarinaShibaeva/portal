@@ -28,19 +28,21 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </head>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
-
+<style>
+    .navbar-expand-md{
+        background: #9360C9;
+    }
+</style>
 <header id="header">
     <?php
     NavBar::begin([
         'brandLabel' => '<img src="../images/logo.png" style="width: 40px; height: 40px">',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar navbar-expand-lg navbar-danger bg-primary fixed-top']
+        'brandUrl' => ['default/index'],
+        'options' => ['class' => 'navbar-expand-md navbar-dark fixed-top']
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Админка', 'url' => ['/default/index']],
             Yii::$app->user->isGuest
                 ? ['label' => 'Вход', 'url' => ['/site/login']]
                 : '<li class="nav-item">'

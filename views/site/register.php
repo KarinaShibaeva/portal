@@ -36,11 +36,11 @@ $this->title = 'Регистрация';
 <div class="d-flex flex-column w-100 justify-content-between">
     <div class="d-flex justify-content-between">
 
-        <div class="w-25"><?= $form->field($model, 'surname')->textInput(['autofocus' => true]) ?></div>
+        <div class="w-50 me-5"><?= $form->field($model, 'surname')->textInput(['autofocus' => true]) ?></div>
 
-        <div class="w-25"><?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?></div>
+        <div class="w-50 me-5"><?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?></div>
 
-        <div class="w-25"><?= $form->field($model, 'patronymic')->textInput(['autofocus' => true]) ?></div>
+        <div class="w-50"><?= $form->field($model, 'patronymic')->textInput(['autofocus' => true]) ?></div>
 
     </div>
     <div class="d-flex justify-content-between">
